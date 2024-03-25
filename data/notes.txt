@@ -1,0 +1,16 @@
+The US GDP has increased by 1.21% from July 2023 to October 2023.
+The US Real GDP data has been collected successfully.
+The US GDP has increased by 11434.33% from January 1947 to October 2023.
+The US Real GDP data has been collected successfully.
+Calculate the GDP percentage increase or decrease from January 1947 to October 2023.
+Initial GDP (January 1947): $2182.681 billion
+Final GDP (October 2023): $22668.986 billion
+Percentage Change = ((Final GDP - Initial GDP) / Initial GDP) * 100
+Percentage Change = (($22668.986 - $2182.681) / $2182.681) * 100
+Percentage Change = ($20486.305 / $2182.681) * 100
+Percentage Change = 939.07%
+GDP has increased from July 2023 to October 2023
+GDP has increased from July 2023 to October 2023
+GDP has increased from July 2023 to October 2023
+The US 10-year Treasury rate has decreased from July 2023 to October 2023
+The US 10-year Treasury rate increased from 3.9% in July 2023 to 4.8% in October 2023.
