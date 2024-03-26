@@ -1,11 +1,11 @@
 import requests
 import pandas as pd
 
-from typing import Dict
+from typing import Dict, Match
 
 
-def get_property_id(api_key: Dict[str, str], address:str) -> str:
-    """Given a property address, returns a property id"""
+def get_property_id(api_key: Dict[str, str], address: str) -> str:
+    """Given a property address that consists of alphanumeric characters, returns a property id"""
     
     REALTOR_API_KEY = api_key["REALTOR_API_KEY"]
     url = "https://realtor.p.rapidapi.com/locations/v2/auto-complete"

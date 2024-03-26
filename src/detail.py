@@ -43,7 +43,90 @@ def get_nearby_school_info_by_property_id(api_key: Dict[str, str], property_id:s
     
     return nearby_schools_df
 
+def get_home_details_by_property_id(api_key: Dict[str, str], property_id:str) -> pd.DataFrame:
+    """Get details home details about 'Heating and Cooling',
+                                     'Exterior and Lot Features',
+                                     'Land Info',
+                                     'Homeowners Association',
+                                     'Multi-Unit Info',
+                                     'Rental Info',
+                                     'Other Property Info',
+                                     'Building and Construction',
+                                     'Utilities'."""
+    
+    REALTOR_API_KEY = api_key["REALTOR_API_KEY"]
+    url = "https://realtor.p.rapidapi.com/properties/v3/detail"
+    querystring = {"property_id":property_id}
+    headers = {
+    	"X-RapidAPI-Key": REALTOR_API_KEY,
+    	"X-RapidAPI-Host": "realtor.p.rapidapi.com"
+    }
+    home_details_df = pd.DataFrame()
+    response = requests.get(url, headers=headers, params=querystring)
+    if response.status_code != 200:
+        return home_details_df
+    
+    home_details_df = pd.json_normalize(response.json()['data']['home']['details'])
+    return home_details_df
 
+
+def get_property_address_by_property_id(api_key: Dict[str, str], property_id:str) -> dict:
+    """Get property address street, city, and postal code information."""
+
+    REALTOR_API_KEY = api_key["REALTOR_API_KEY"]
+    url = "https://realtor.p.rapidapi.com/properties/v3/detail"
+    querystring = {"property_id":property_id}
+    headers = {
+        "X-RapidAPI-Key": REALTOR_API_KEY,
+        "X-RapidAPI-Host": "realtor.p.rapidapi.com"
+    }
+    address_dict = {}
+    response = requests.get(url, headers=headers, params=querystring)
+    if response.status_code != 200:
+        return address_dict
+    
+    address_dict = response.json()['data']['home']['location']['address']
+
+    return address_dict
+
+def get_property_history_by_property_id(api_key: Dict[str, str], property_id:str) -> dict:
+    """Get property buy/sell history, including 'date', 'event_name', and 'price'."""
+
+    REALTOR_API_KEY = api_key["REALTOR_API_KEY"]
+    url = "https://realtor.p.rapidapi.com/properties/v3/detail"
+    querystring = {"property_id":property_id}
+    headers = {
+        "X-RapidAPI-Key": REALTOR_API_KEY,
+        "X-RapidAPI-Host": "realtor.p.rapidapi.com"
+    }
+    property_history_dict = {}
+    response = requests.get(url, headers=headers, params=querystring)
+    if response.status_code != 200:
+        return address_dict
+    
+    property_history_dict = {k:v for k, v in response.json()['data']['home']['property_history'][0].items() if k != 'listing'}
+
+    return property_history_dict
+
+
+def get_listing_description_by_property_id(api_key: Dict[str, str], property_id:str) -> dict:
+    """Get property listing description, including 'baths', 'baths_min', 'baths_max', 'heating', 'cooling', 'beds', 'beds_min', 'beds_max', 'garage', 'garage_min', 'garage_max', 'pool', 'sqft', 'sqft_min', 'sqft_max', 'styles', 'lot_sqft', 'units', 'stories', 'type', 'sub_type', 'listing description', 'year_built', 'name'."""
+
+    REALTOR_API_KEY = api_key["REALTOR_API_KEY"]
+    url = "https://realtor.p.rapidapi.com/properties/v3/detail"
+    querystring = {"property_id":property_id}
+    headers = {
+        "X-RapidAPI-Key": REALTOR_API_KEY,
+        "X-RapidAPI-Host": "realtor.p.rapidapi.com"
+    }
+    property_listing_desc_dict = {}
+    response = requests.get(url, headers=headers, params=querystring)
+    if response.status_code != 200:
+        return address_dict
+    
+    property_listing_desc_dict = {k:v for k, v in response.json()['data']['home']['description'].items() if v if not None}
+
+    return property_listing_desc_dict
 
 def get_listing_photos_by_property_id(api_key: Dict[str, str], property_id:str) -> list:
     """Get photos of a property."""
